@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agritech</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/60349524e7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=Montserrat:wght@200&family=Work+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id" content="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com">
+</head>
+
+<body>
+
+    <header class="container">
+
+        <nav class="navbar container px-4 py-4 items-center bg-gray-100 shadow-md rounded flex justify-between">
+            <!-- Agritech Logo on the left -->
+            <a class="navbar-brand" href="#">
+                <img src="logo3.png" alt="Logo" class="h-10">
+            </a>
+            <!-- Navbar links -->
+            <div class="hidden lg:flex gap-4 text-lg font-semibold mr-2" id="navbarMenu">
+                <a class="nav-link text-gray-700 hover:text-green-500" href="#crops-section">Crops</a>
+                <a class="nav-link text-gray-700 hover:text-green-500" href="#vegetable-section">Vegetable</a>
+                <a class="nav-link text-gray-700 hover:text-green-500" href="#Market">Market</a>
+                <a class="nav-link text-gray-700 hover:text-green-500" href="#calcu">Calculator</a>
+                <a class="nav-link text-gray-700 hover:text-green-500" href="#Government-section">Services</a>
+                <a class="nav-link text-gray-700 hover:text-green-500" href="#">Blog</a>
+            </div>
+
+                
+          
+              
+              
+
+               
+            </div>
+            
+        </nav>
+        <div class="bg-gradient-to-r from-orange-400 via-blue-500 to-blue-600 flex items-center justify-center min-h-screen">
+            <div class="bg-white bg-opacity-90 rounded-lg shadow-lg p-8 w-full max-w-md">
+              <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">Create Account</h2>
+              <form>
+                <div class="mb-4">
+                  <input 
+                    type="text" 
+                    placeholder="Email or Phone" 
+                    class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required
+                  />
+                </div>
+                <div class="mb-6">
+                  <input 
+                    type="password" 
+                    placeholder="Password" 
+                    class="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required
+                  />
+                </div>
+                <button 
+                  type="submit" 
+                  class="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-200"
+                >
+                  Create Account
+                </button>
+                <div class="flex items-center justify-between mt-6">
+                  <button 
+                    type="button" 
+                    class="bg-red-500 text-white py-2 px-4 rounded-lg w-[48%] hover:bg-red-600 transition duration-200"
+                  >
+                    Google
+                  </button>
+                  <button 
+                    type="button" 
+                    class="bg-blue-600 text-white py-2 px-4 rounded-lg w-[48%] hover:bg-blue-700 transition duration-200"
+                  >
+                    Facebook
+                  </button>
+                </div>
+                <p class="text-center text-sm text-gray-600 mt-4">
+                  Have an account? 
+                  <a href="#" class="text-blue-500 hover:underline">Login Here</a>
+                </p>
+              </form>
+            </div>
+          </div>
+        <!-- Profile Section -->
+        <section id="profileSection" class="hidden container mx-auto mt-10 bg-white shadow p-8 rounded">
+            <h2 class="text-2xl font-bold mb-4">Your Profile</h2>
+            <div class="flex">
+                <img id="profilePicLarge" class="h-20 w-20 rounded-full mr-4" alt="User Picture">
+                <div>
+                    <p id="profileNameLarge" class="text-xl font-semibold"></p>
+                    <p id="profileEmail" class="text-gray-600"></p>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            // Google Sign-In success callback
+            function onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+                document.getElementById('profilePic').src = profile.getImageUrl();
+                document.getElementById('profileName').textContent = profile.getName();
+                document.getElementById('profilePicLarge').src = profile.getImageUrl();
+                document.getElementById('profileNameLarge').textContent = profile.getName();
+                document.getElementById('profileEmail').textContent = profile.getEmail();
+
+                // Show profile details and hide login/signup
+                document.getElementById('userProfile').classList.remove('hidden');
+                document.getElementById('loginBtn').classList.add('hidden');
+                document.getElementById('signupBtn').classList.add('hidden');
+                document.getElementById('profileSection').classList.remove('hidden');
+            }
+
+            // Google Sign-Out function
+            function signOut() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                auth2.signOut().then(function () {
+                    document.getElementById('userProfile').classList.add('hidden');
+                    document.getElementById('loginBtn').classList.remove('hidden');
+                    document.getElementById('signupBtn').classList.remove('hidden');
+                    document.getElementById('profileSection').classList.add('hidden');
+                });
+            }
+
+            // Load the Google Auth2 library
+            function initGoogleAuth() {
+                gapi.load('auth2', function () {
+                    gapi.auth2.init();
+                });
+            }
+            window.onload = initGoogleAuth;
+        </script>
+
+
+        </nav>
+        <!-- Banner Section -->
+        <div class="banner container mx-auto text-center text-white py-16 mt-16">
+            <div class="banner-text">
+                <h1 class="text-3xl font-bold">We Provide Effective <br> Solutions</h1>
+                <p class="mt-4 text-lg">Green Harvest Solutions is a top agricultural consulting firm in Bangladesh,
+                    offering sustainable farming practices and innovative solutions.</p>
+
+                <!-- Search Section -->
+                <div class="mt-6 flex justify-center gap-4">
+                    <input type="email" class="form-input py-3 px-5 w-80 rounded-md shadow-md"
+                        placeholder="name@example.com">
+                    <button class="btn bg-green-500 text-white py-3 px-6 rounded-lg hover:bg-green-600"
+                        id="searchButton">Search</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <button onclick="scrollToTop()" id="scrollBtn" title="Go to top"
+        class=" fixed bottom-8 right-8 z-50 bg-green-600 text-white p-4 rounded shadow-lg hover:bg-green-800 transition">
+        <i class="fa-solid fa-arrow-up "></i>
+    </button>
+    <main class="container bg-gray-50">
+
+
+        <!-- Crops Section -->
+        <section id="crops-section ">
+            <h1 class="text-center font-bold text-4xl py-4">Crops</h1>
+            <div class="container">
+                <div class="container mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px] text-center box">
+                        <!-- Rice Section -->
+                        <div class="border-4 border-green-500 rounded-lg p-4 cursor-pointer crop-section hover:shadow-lg transition-transform duration-300 transform hover:scale-105"
+                            data-bs-toggle="modal" data-bs-target="#riceModal">
+                            <div class="crop-container">
+                                <img class="w-full h-auto rounded-md" src="rice2.png" alt="Rice Image">
+                            </div>
+                            <h1 class="font-bold mt-4 text-xl">Rice/ধান</h1>
+                        </div>
+
+                        <!-- Wheat Section -->
+                        <div class="border-4 border-green-500 rounded-lg p-4 cursor-pointer crop-section hover:shadow-lg transition-transform duration-300 transform hover:scale-105"
+                            data-bs-toggle="modal" data-bs-target="#wheatModal">
+                            <div class="crop-container">
+                                <img class="w-full h-auto rounded-md" src="gom.png" alt="Wheat Image">
+                            </div>
+                            <h1 class="font-bold mt-4 text-xl">Wheat/গম</h1>
+                        </div>
+
+                        <!-- Corn Section -->
+                        <div class="border-4 border-green-500 rounded-lg p-4 cursor-pointer crop-section hover:shadow-lg transition-transform duration-300 transform hover:scale-105"
+                            data-bs-toggle="modal" data-bs-target="#cornModal">
+                            <div class="crop-container">
+                                <img class="w-full h-auto rounded-md" src="vutta.png" alt="Corn Image">
+                            </div>
+                            <h1 class="font-bold mt-4 text-xl">Corn/ভুট্টা</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Rice Information Modal -->
+        <div class="modal fade" id="riceModal" tabindex="-1" aria-labelledby="riceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="riceModalLabel">Rice/ধান - Crop Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6 class="fw-bold">Rice Cultivation Details in Bangladesh:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Climate</td>
+                                        <td>Tropical and subtropical, with high humidity and significant monsoon
+                                            rainfall.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ideal Temperature</td>
+                                        <td>20°C to 35°C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Humidity</td>
+                                        <td>High humidity levels above 60% are ideal for rice cultivation.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rainfall</td>
+                                        <td>150-300 cm annually, mainly provided by the monsoon season.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Soil Type</td>
+                                        <td>Loamy to clayey soil with a pH range of 5.5 to 6.5 is best suited for rice.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Key Rice Seasons</td>
+                                        <td>
+                                            <ul>
+                                                <li><strong>Aman:</strong> July - December</li>
+                                                <li><strong>Boro:</strong> November - April</li>
+                                                <li><strong>Aus:</strong> March - August</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fertilizer Recommendations</td>
+                                        <td>
+                                            <ul>
+                                                <li><strong>NPK Fertilizer (10-20-10):</strong> Promotes growth and
+                                                    healthy grains.</li>
+                                                <li><strong>Urea Fertilizer:</strong> Supports vegetative growth.</li>
+                                                <li><strong>Organic Fertilizer:</strong> Improves soil fertility.</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Irrigation</td>
+                                        <td>Regular irrigation is essential during the dry season, especially for Boro
+                                            rice.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wheat Information Modal -->
+        <div class="modal fade" id="wheatModal" tabindex="-1" aria-labelledby="wheatModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="wheatModalLabel">Wheat/গম - Crop Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <h6 class="fw-bold">Wheat Cultivation Details in Bangladesh:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Climate</td>
+                                        <td>Grows well in cool, dry conditions. Prefers dry winters with moderate
+                                            rainfall.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ideal Temperature</td>
+                                        <td>15°C to 25°C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Humidity</td>
+                                        <td>Moderate humidity levels, below 50%, are ideal for wheat.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rainfall</td>
+                                        <td>40-75 cm annually, less water-demanding compared to rice.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Soil Type</td>
+                                        <td>Loamy soil with good drainage and a pH of 6.0 to 7.5 is best suited.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Key Wheat Season</td>
+                                        <td>Planted in November and harvested between February and March.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fertilizer Recommendations</td>
+                                        <td>
+                                            <ul>
+                                                <li><strong>NPK Fertilizer (12-32-16):</strong> Supports root growth and
+                                                    grain formation.</li>
+                                                <li><strong>Potash Fertilizer:</strong> Enhances drought resistance.
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Irrigation</td>
+                                        <td>Minimal irrigation required compared to rice; supplemental water during dry
+                                            periods is beneficial.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Corn Information Modal -->
+        <div class="modal fade" id="cornModal" tabindex="-1" aria-labelledby="cornModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="cornModalLabel">Corn/ভুট্টা - Crop Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6 class="fw-bold">Corn Cultivation Details in Bangladesh:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-warning">
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Climate</td>
+                                        <td>Requires warm weather and moderate rainfall; thrives in tropical and
+                                            subtropical conditions.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ideal Temperature</td>
+                                        <td>20°C to 30°C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Humidity</td>
+                                        <td>Moderate humidity is beneficial; prefers humidity levels between 50-80%.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rainfall</td>
+                                        <td>75-150 cm annually; needs adequate moisture during the growing season.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Soil Type</td>
+                                        <td>Fertile, well-drained soil with a pH of 5.8 to 7.0 is ideal.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Key Corn Season</td>
+                                        <td>Usually planted in April and harvested from July to August.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fertilizer Recommendations</td>
+                                        <td>
+                                            <ul>
+                                                <li><strong>NPK Fertilizer (20-20-20):</strong> Enhances overall growth
+                                                    and yield.</li>
+                                                <li><strong>Urea Fertilizer:</strong> Essential for nitrogen supply,
+                                                    especially during the vegetative phase.</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Irrigation</td>
+                                        <td>Regular irrigation is important, especially in the dry season; overhead
+                                            irrigation is preferred.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Carrot modal-->
+        <div class="modal fade" id="carrotModal" tabindex="-1" aria-labelledby="carrotModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="carrotModalLabel">Carrot/গাজর - Crop Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6 class="fw-bold">Carrot Cultivation Details in Bangladesh:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Climate</td>
+                                        <td>Cool climate, with optimal growth in temperatures between 15°C and 25°C.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ideal Temperature</td>
+                                        <td>16°C to 22°C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Humidity</td>
+                                        <td>Moderate humidity, with around 60-70% being optimal.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rainfall</td>
+                                        <td>75-150 cm annually, with moderate irrigation required in drier periods.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Soil Type</td>
+                                        <td>Light, sandy loam soil with good drainage and a pH of 6.0 to 7.0.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Planting Season</td>
+                                        <td>
+                                            <ul>
+                                                <li><strong>Winter:</strong> October - December</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fertilizer Recommendations</td>
+                                        <td>
+                                            <ul>
+                                                <li><strong>NPK Fertilizer (5-10-10):</strong> Promotes root
+                                                    development.</li>
+                                                <li><strong>Organic Matter:</strong> Helps improve soil structure.</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Irrigation</td>
+                                        <td>Regular, light irrigation is important for uniform root growth.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Cauliflower modal-->
+        <div class="modal fade" id="cauliflowerModal" tabindex="-1" aria-labelledby="cauliflowerModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="cauliflowerModalLabel">Cauliflower/ফুলকপি - Crop Information
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6 class="fw-bold">Cauliflower Cultivation Details in Bangladesh:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Climate</td>
+                                        <td>Cool climate is ideal, with temperatures ranging from 15°C to 20°C for
+                                            growth.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ideal Temperature</td>
+                                        <td>12°C to 20°C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Humidity</td>
+                                        <td>Moderate to high humidity is preferred, around 70-80%.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rainfall</td>
+                                        <td>75-150 cm, with irrigation required in dry periods.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Soil Type</td>
+                                        <td>Well-drained, fertile loamy soil with a pH range of 6.0 to 7.0.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Planting Season</td>
+                                        <td>
+                                            <ul>
+                                                <li><strong>Winter:</strong> October - February</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fertilizer Recommendations</td>
+                                        <td>
+                                            <ul>
+                                                <li><strong>NPK Fertilizer (10-10-10):</strong> Balanced growth and head
+                                                    development.</li>
+                                                <li><strong>Compost:</strong> Improves soil organic matter content.</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Irrigation</td>
+                                        <td>Regular irrigation is essential during head formation.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--vegetables-->
+        <section id="vegetable-section">
+            <h1 class="text-center font-bold text-4xl py-4">Vegetables</h1>
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px] text-center box">
+                    <!-- Tomato Section -->
+                    <div class="border-4 border-green-500 rounded-lg p-4 cursor-pointer crop-section hover:shadow-lg transition-transform duration-300 transform hover:scale-105"
+                        data-bs-toggle="modal" data-bs-target="#tomatoModal">
+                        <div class="crop-container">
+                            <img class="w-full h-auto rounded-md" src="tomato.png" alt="Tomato Image">
+                        </div>
+                        <h1 class="font-bold mt-4 text-xl">Tomato</h1>
+                    </div>
+
+                    <!-- Carrot Section -->
+                    <div class="border-4 border-green-500 rounded-lg p-4 cursor-pointer crop-section hover:shadow-lg transition-transform duration-300 transform hover:scale-105"
+                        data-bs-toggle="modal" data-bs-target="#carrotModal">
+                        <div class="crop-container">
+                            <img class="w-full h-auto rounded-md" src="carrot.png" alt="Carrot Image">
+                        </div>
+                        <h1 class="font-bold mt-4 text-xl">Carrot</h1>
+                    </div>
+
+                    <!-- cauliflower Section -->
+                    <div class="border-4 border-green-500 rounded-lg p-4 cursor-pointer crop-section hover:shadow-lg transition-transform duration-300 transform hover:scale-105"
+                        data-bs-toggle="modal" data-bs-target="#cauliflowerModal">
+                        <div class="crop-container">
+                            <img class="w-full h-auto rounded-md" src="cauliflower.png" alt="cauliflower Image">
+                        </div>
+                        <h1 class="font-bold mt-4 text-xl">Cauliflower</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="modal fade" id="tomatoModal" tabindex="-1" aria-labelledby="tomatoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="tomatoModalLabel">Tomato/টমেটো - Crop Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6 class="fw-bold">Tomato Cultivation Details in Bangladesh:</h6>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>Aspect</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Climate</td>
+                                        <td>Warm with moderate rainfall. Tomatoes grow best in temperatures between 20°C
+                                            and 25°C.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ideal Temperature</td>
+                                        <td>18°C to 30°C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Humidity</td>
+                                        <td>Moderate humidity is required, ideally between 50-70%.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rainfall</td>
+                                        <td>80-120 cm annually.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Soil Type</td>
+                                        <td>Well-drained, fertile loamy soil with a pH range of 6.0 to 7.0.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Planting Season</td>
+                                        <td>
+                                            <ul>
+                                                <li><strong>Winter:</strong> October - March</li>
+                                                <li><strong>Summer:</strong> April - August</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fertilizer Recommendations</td>
+                                        <td>
+                                            <ul>
+                                                <li><strong>NPK Fertilizer (10-10-10):</strong> Ensures balanced growth.
+                                                </li>
+                                                <li><strong>Compost:</strong> Improves soil structure and fertility.
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Irrigation</td>
+                                        <td>Regular watering, especially during flowering and fruit development stages.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Government-->
+        <section id="Government-section">
+            <h1 class="text-center font-bold text-4xl py-4">Government Services</h1>
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px] text-center box">
+                    <!-- Loan Section -->
+                    <div
+                        class="border-4 border-green-500 rounded-lg p-4 cursor-pointer crop-section hover:shadow-lg transition-transform duration-300 transform hover:scale-105">
+
+                        <div class="crop-container">
+                            <img class="w-full h-auto rounded-md" src="Loan.png" alt="Loan Image">
+                        </div>
+                        <h1 class="font-bold mt-4 text-xl"><a
+                                href="https://www.nblbd.com/products/agriculture-loan">Loan</a></h1>
+                    </div>
+
+                    <!-- Wheat Section -->
+                    <div class="border-4 border-green-500 rounded-lg p-4 cursor-pointer crop-section hover:shadow-lg transition-transform duration-300 transform hover:scale-105"
+                        data-bs-toggle="modal" data-bs-target="#wheatModal">
+                        <div class="crop-container">
+                            <img class="w-full h-auto rounded-md" src="insurance.png" alt="Wheat Image">
+                        </div>
+                        <h1 class="font-bold mt-4 text-xl">Insurance</h1>
+                    </div>
+
+                    <!-- Corn Section -->
+                    <div class="border-4 border-green-500 rounded-lg p-4 cursor-pointer crop-section hover:shadow-lg transition-transform duration-300 transform hover:scale-105"
+                        data-bs-toggle="modal" data-bs-target="#cornModal">
+                        <div class="crop-container">
+                            <img class="w-full h-auto rounded-md" src="program.png" alt="Corn Image">
+                        </div>
+                        <h1 class="font-bold mt-4 text-xl">Training Programs</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Weather-->
+        <h1 class="text-center font-bold text-4xl py-4">Weather</h1>
+        <div id="weatherapi-weather-widget-2" class="border-4 border-green-500 rounded-lg"></div>
+        <!--innovation-->
+
+
+
+        <section class="bg-gray-50">
+            <div class=" mx-auto px-4 py-8">
+
+                <!-- New Section: Feature Cards -->
+                <section class="mt-16">
+                    <h2 class="text-2xl font-semibold text-green-700 mb-4 text-center">Explore Agricultural</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                        <!-- Calculator Card -->
+                        <div id="calcu"
+                            class="bg-white shadow-lg rounded-lg p-4 text-center hover:shadow-xl transition-shadow duration-300">
+                            <img src="agricalcu.png" alt="Rice Farming Seminar"
+                                class="w-full h-40 object-cover rounded-t-lg">
+                            <a href="https://charming-khapse-9283e9.netlify.app/" target="_blank"
+                                class="mt-2 inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Calculator</a>
+                        </div>
+                        <!-- Events Card -->
+                        <div
+                            class="bg-white shadow-lg rounded-lg p-4 text-center hover:shadow-xl transition-shadow duration-300">
+                            <img src="instrument.png" alt="Rice Farming Seminar"
+                                class="w-full h-40 object-cover rounded-t-lg">
+                            <a href="https://brri.gov.bd/#:~:text=Bangladesh%20Rice%20Research" target="_blank"
+                                class="mt-2 inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Instrument</a>
+                        </div>
+                        <!-- Market Card -->
+                        <div id="Market"
+                            class="bg-white shadow-lg rounded-lg p-4 text-center hover:shadow-xl transition-shadow duration-300">
+                            <img src="market.png" class="w-full h-40 object-cover rounded-t-lg">
+                            <a href="https://papaya-maamoul-4788bd.netlify.app/" target="Market"
+                                class="mt-2 inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Market</a>
+                        </div>
+                        <!-- Prediction Card -->
+                        <div
+                            class="bg-white shadow-lg rounded-lg p-4 text-center hover:shadow-xl transition-shadow duration-300">
+                            <img src="blog.png" alt="Rice Farming Seminar"
+                                class="w-full h-40 object-cover rounded-t-lg">
+                            <a href="https://www.ecoagtube.org/channel/access-agriculture-video-summaries-bangla-0"
+                                target="_blank"
+                                class="mt-2 inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Blogs</a>
+                        </div>
+                        <!-- Blogs Card -->
+                        <div
+                            class="bg-white shadow-lg rounded-lg p-4 text-center hover:shadow-xl transition-shadow duration-300">
+                            <img src="chacha.jpg" alt="Rice Farming Seminar"
+                                class="w-full h-40 object-cover rounded-t-lg">
+                            <a href="https://csisa.org/wp-content/uploads/sites/2/2014/06/CSISA-Life-Changing-Stories-Gender_FINAL.pdf"
+                                target="_blank"
+                                class="mt-2 inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Success
+                                Story</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Filter options -->
+                <header class="text-center">
+                    <h1 class="text-4xl font-bold text-green-700 mb-4">Bangladesh Agriculture Events & Calendar</h1>
+                    <p class="text-lg text-gray-700">Stay updated with the latest agriculture events happening in
+                        Bangladesh.</p>
+                </header>
+
+                <div class="filter mt-8 flex justify-center space-x-4">
+                    <button
+                        class="filter-btn px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-green-500 hover:text-white"
+                        data-filter="all">All</button>
+                    <button
+                        class="filter-btn px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-green-500 hover:text-white"
+                        data-filter="today">Today</button>
+                    <button
+                        class="filter-btn px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-green-500 hover:text-white"
+                        data-filter="week">This Week</button>
+                    <button
+                        class="filter-btn px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-green-500 hover:text-white"
+                        data-filter="month">This Month</button>
+                </div>
+
+                <!-- Calendar Section -->
+                <section id="calendar" class="mt-12 text-center">
+                    <h2 class="text-2xl font-semibold text-green-700 ">Event Calendar</h2>
+                    <div class="calendar-container mt-4 flex justify-center">
+                        <input type="date" id="event-date-picker" class="border border-gray-300 rounded p-2 mr-4">
+                        <button id="show-events"
+                            class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Show Events</button>
+                    </div>
+                    <div id="event-list" class="mt-6">
+                        <!-- Events will be displayed here -->
+                    </div>
+                </section>
+
+                <!-- Events Section (Grid layout) -->
+                <section id="upcoming-events" class="mt-16">
+                    <h2 class="text-2xl font-semibold text-green-700 mb-4">Upcoming Events</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Rice Farming Seminar -->
+                        <div class="event-card bg-white shadow-lg rounded-lg p-4 filter-item all month">
+                            <img src="rice2.png" alt="Rice Farming Seminar"
+                                class="w-full h-48 object-cover rounded-t-lg">
+                            <h3 class="text-xl font-bold mt-4">Rice Farming Seminar</h3>
+                            <p class="text-gray-600">Date: Oct 15, 2024</p>
+                            <a href="https://brri.gov.bd/#:~:text=Bangladesh%20Rice%20Research" target="_blank"
+                                class="text-green-600 hover:text-green-800">More Info</a>
+                        </div>
+
+                        <!-- AgriTech Expo -->
+                        <div class="event-card bg-white shadow-lg rounded-lg p-4 filter-item all week">
+                            <img src="agro.png" alt="AgriTech Expo" class="w-full h-48 object-cover rounded-t-lg">
+                            <h3 class="text-xl font-bold mt-4">AgriTech Expo</h3>
+                            <p class="text-gray-600">Date: Oct 22-24, 2024</p>
+                            <a href="http://www.agrobangladesh.com/" target="_blank"
+                                class="text-green-600 hover:text-green-800">More Info</a>
+                        </div>
+
+                        <!-- Organic Farming Workshop -->
+                        <div class="event-card bg-white shadow-lg rounded-lg p-4 filter-item all month">
+                            <img src="organic.png" alt="Organic Farming Workshop"
+                                class="w-full h-48 object-cover rounded-t-lg">
+                            <h3 class="text-xl font-bold mt-4">Organic Farming Workshop</h3>
+                            <p class="text-gray-600">Date: Nov 28, 2024</p>
+                            <a href="https://www.organicbd.org/" target="_blank"
+                                class="text-green-600 hover:text-green-800">More Info</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Forum Section (Grid layout) -->
+                <section id="forum" class="mt-16">
+                    <h2 class="text-2xl font-semibold text-green-700 mb-4">Discussion Forums & Agricultural Resources
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div class="forum-card bg-white shadow-lg rounded-lg p-4 text-center">
+                            <img src="fao2.png" alt="FAO Bangladesh" class="w-full h-20 rounded-md">
+                            <a href="https://www.fao.org/bangladesh/en/" target="_blank"
+                                class="text-green-600 hover:text-green-800">FAO Bangladesh</a>
+                        </div>
+                        <div class="forum-card bg-white shadow-lg rounded-lg p-4 text-center">
+                            <img src="goru.png" alt="AgriFarming International" class="w-full h-20 rounded-md">
+                            <a href="https://www.agrifarming.in" target="_blank"
+                                class="text-green-600 hover:text-green-800">AgriFarming International</a>
+                        </div>
+                        <div class="forum-card bg-white shadow-lg rounded-lg p-4 text-center">
+                            <img src="krishi.png" alt="Krishi Bangladesh" class="h-20 mx-auto mb-4">
+                            <a href="https://krishibd.com" target="_blank"
+                                class="text-green-600 hover:text-green-800">Krishi Bangladesh</a>
+                        </div>
+                        <div class="forum-card bg-white shadow-lg rounded-lg p-4 text-center">
+                            <img src="ministry.png" alt="Ministry of Agriculture, Bangladesh" class="h-20 mx-auto mb-4">
+                            <a href="https://moa.gov.bd/" target="_blank"
+                                class="text-green-600 hover:text-green-800">Ministry of Agriculture, Bangladesh</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </section>
+
+
+        <!-- Videos Section -->
+        <section class="mt-16">
+            <h2 class="text-3xl font-semibold text-green-700 mb-6">Agricultural Videos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/TyW5PFyHXhk?si=IQ780WWuGhRaF2VI"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/-eqDLgki_hA?si=YcsUgHIqx39sg0f3"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/I_l7gw13mEY?si=G28lmSJ60xXgIyN7"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        </div>
+        <!-- Contact Us Section -->
+        <section class="py-10 bg-gray-100">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-bold text-gray-700">Contact Us</h1>
+                <p class="text-lg text-gray-600">Contact with us immediately if you need any support</p>
+            </div>
+
+            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Contact Info -->
+                <div class="space-y-8 text-center">
+                    <div class="border rounded-lg p-5 bg-white shadow-lg">
+                        <img src="images/address.png" alt="Address Icon" class="mx-auto mb-3">
+                        <h2 class="text-2xl font-bold">Address</h2>
+                        <p>A108 Adam Street, New York, NY 535022</p>
+                    </div>
+
+                    <div class="border rounded-lg p-5 bg-white shadow-lg">
+                        <img src="images/email.png" alt="Email Icon" class="mx-auto mb-3">
+                        <h2 class="text-2xl font-bold">Email Us</h2>
+                        <p>info@gmail.com</p>
+                        <p>support@agritech.com</p>
+                    </div>
+
+
+                    <div class="border rounded-lg p-5 bg-white shadow-lg">
+                        <img src="images/time.png" alt="Working Hours Icon" class="mx-auto mb-3">
+                        <h2 class="text-2xl font-bold">Working Hours</h2>
+                        <p>Mon-Fri: 9AM to 5PM</p>
+                        <p>Sunday: 9AM to 1 PM</p>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-white shadow-lg rounded-lg p-8">
+                    <form>
+                        <input type="text" placeholder="Your Name"
+                            class="form-input mb-4 w-full p-4 border border-gray-300 rounded-lg">
+                        <input type="email" placeholder="Your Email"
+                            class="form-input mb-4 w-full p-4 border border-gray-300 rounded-lg">
+                        <input type="text" placeholder="Subject"
+                            class="form-input mb-4 w-full p-4 border border-gray-300 rounded-lg">
+                        <textarea placeholder="Your Message"
+                            class="form-input mb-4 w-full p-4 border border-gray-300 rounded-lg" rows="5"></textarea>
+                        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg w-full"
+                            id="sendEmail">
+                            Send Message
+                        </button>
+                        <!-- Google Email Link (requires backend) -->
+                        <a href="mailto:info@agritech.com?subject=Support Request"
+                            class="block mt-4 text-center text-blue-600 hover:underline">
+                            Or continue with your Google account
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="bg-gray-800 text-white py-10">
+            <div class="container  grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Logo & Quote -->
+                <div class="space-y-5">
+                    <img src="logo3.png" alt="Agritech Logo" class="h-12">
+                    <p>“Agriculture is the foundation of civilization and any stable economy.”</p>
+                    <p>“Justice in agriculture means fairness for the farmers who feed the world.”</p>
+                </div>
+
+                <!-- Useful Links -->
+                <div>
+                    <h4 class="text-2xl font-bold mb-4">Useful Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-green-500">Home</a></li>
+                        <li><a href="#" class="hover:text-green-500">Cases</a></li>
+                        <li><a href="#" class="hover:text-green-500">Services</a></li>
+                        <li><a href="#" class="hover:text-green-500">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-green-500">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-2xl font-bold mb-4">Contact Now</h4>
+                    <p>Phone: +88 01750 00 00</p>
+                    <p>Email: support@agritech.com</p>
+                </div>
+
+                <!-- Subscribe -->
+                <div class=" flex h-10">
+                    <input type="email" class="form-input shadow-md" placeholder="name@example.com">
+                    <button class="btn bg-green-500 text-white rounded-0 hover:bg-green-600">Subscribe</button>
+                </div>
+
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="text-center mt-8 border-t border-gray-700 pt-5">
+                <p>&copy; 2024 Agritech. All Rights Reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            // JavaScript for handling email (this requires backend support for Google OAuth)
+            document.getElementById('sendEmail').addEventListener('click', function (e) {
+                e.preventDefault();
+                alert('Email functionality requires backend integration.');
+            });
+        </script>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<script type="module" src="register.js"></script>
+<script type="module" src="login.js"></script>
+<script type='text/javascript'
+    src='https://www.weatherapi.com/weather/widget.ashx?loc=174248&wid=2&tu=2&div=weatherapi-weather-widget-2'
+    async><script type='text/javascript' src='https://www.weatherapi.com/weather/widget.ashx?loc=174248&wid=3&tu=2&div=weatherapi-weather-widget-3' async></script>
+<noscript><a href="https://www.weatherapi.com/weather/q/dhaka-174248" alt="Hour by hour Dhaka weather">10 day hour by
+        hour Dhaka weather</a></noscript>
+<script src="calculaotr.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-auth.js"></script>
+
+</html>
